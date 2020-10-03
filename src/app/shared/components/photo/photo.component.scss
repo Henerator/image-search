@@ -1,0 +1,35 @@
+:host {
+    display: block;
+    position: relative;
+
+    &:hover {
+        .photo__overlay {
+            opacity: 1;
+        }
+    }
+}
+
+.photo__image {
+    display: block;
+    max-width: 100%;
+}
+
+.photo__overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    transition: opacity 0.2s ease;
+}
+
+.photo__action {
+    cursor: pointer;
+}

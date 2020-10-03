@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Photo } from '@shared/models/photo.model';
 import { SubscriptionStorage } from '@shared/models/subscriptions-storage';
 import { map } from 'rxjs/operators';
 import { PhotosDataService } from './services/photos-data.service';
@@ -12,7 +13,7 @@ import { PhotosDataService } from './services/photos-data.service';
   ]
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  imagesUrls = [];
+  photos: Photo[] = [];
   isLoading = true;
 
   private subscriptions = new SubscriptionStorage();
@@ -25,8 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(
       this.photosDataService.data$
-        .pipe(map(data => data.map(item => item.download_url)))
-        .subscribe(urls => this.imagesUrls = urls)
+        .subscribe(photos => this.photos = photos)
     );
     this.subscriptions.add(
       this.photosDataService.isLoading$
@@ -45,6 +45,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadPhotos(): void {
-    this.photosDataService.fetch(9);
+    this.photosDataService.fetch(3);
   }
 }

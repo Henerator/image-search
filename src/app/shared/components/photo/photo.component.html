@@ -1,0 +1,16 @@
+<img
+    [src]="url"
+    class="photo__image"
+/>
+
+<div class="photo__overlay">
+    <div>
+        <span
+            (click)="onAddToCollection()"
+            class="photo__action"
+        >
+            Add to collection
+        </span>
+    </div>
+    <div class="info">Athor: {{ author }}</div>
+</div>
