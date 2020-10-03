@@ -6,4 +6,11 @@
     ></app-search-input>
 </div>
 
-<app-images-list [urls]="imagesUrls"></app-images-list>
+<div *ngIf="isLoading">
+    Loading...
+</div>
+
+<app-images-list
+    *ngIf="!isLoading"
+    [urls]="imagesUrls"
+></app-images-list>
