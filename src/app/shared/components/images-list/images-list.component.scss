@@ -1,0 +1,9 @@
+:host {
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+}
+
+.photo__image {
+    max-width: 100%;
+}
