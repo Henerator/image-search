@@ -1,16 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Photo } from '@shared/models/photo.model';
 import { SubscriptionStorage } from '@shared/models/subscriptions-storage';
-import { map } from 'rxjs/operators';
 import { PhotosDataService } from './services/photos-data.service';
+import { PicsumPhotosDataService } from './services/picsum-photos-data.service';
+import { UnsplashPhotosDataService } from './services/unsplash-photos-data.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: [
-    PhotosDataService,
-  ]
+  providers: [{
+    provide: PhotosDataService,
+    useClass: PicsumPhotosDataService, // unlimited number of requests
+    // useClass: UnsplashPhotosDataService,  // 50 requestes per hour
+  }]
 })
 export class HomeComponent implements OnInit, OnDestroy {
   photos: Photo[] = [];
@@ -19,7 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscriptions = new SubscriptionStorage();
 
   constructor(
-    private photosDataService: PhotosDataService,
+    private photosDataService: PhotosDataService<Photo[]>,
   ) {
   }
 
@@ -40,11 +43,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onSearchValueChange(value: string): void {
-    console.log(value);
-    this.loadPhotos();
+    this.loadPhotos(value);
   }
 
-  loadPhotos(): void {
-    this.photosDataService.fetch(3);
+  loadPhotos(query?: string): void {
+    this.photosDataService.fetch(3, query);
   }
 }
