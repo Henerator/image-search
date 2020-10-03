@@ -1,1 +1,9 @@
+<div class="search-input-container">
+    <app-search-input
+        [placeholder]="'Search for free photos'"
+        (valueChange)="onSearchValueChange($event)"
+        class="search-input"
+    ></app-search-input>
+</div>
+
 <app-images-list [urls]="imagesUrls"></app-images-list>

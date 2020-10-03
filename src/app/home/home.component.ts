@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.api.get<Photo[]>('https://picsum.photos/v2/list', {
       searchParams: {
-        limit: '10',
+        limit: '9',
       }
     })
     .pipe(map(data => data.map(item => item.download_url)))
@@ -32,4 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  onSearchValueChange(value: string): void {
+    console.log(value);
+  }
 }
