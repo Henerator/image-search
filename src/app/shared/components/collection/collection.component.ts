@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Collection } from '../models/collection.model';
+import { Collection } from '@shared/models/collection.model';
 
 @Component({
     selector: 'app-collection',

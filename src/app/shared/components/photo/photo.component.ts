@@ -1,20 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { EventEmitter, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-photo',
-  templateUrl: './photo.component.html',
-  styleUrls: ['./photo.component.scss']
+    selector: 'app-photo',
+    templateUrl: './photo.component.html',
+    styleUrls: ['./photo.component.scss']
 })
-export class PhotoComponent implements OnInit {
-  @Input() url: string;
-  @Input() author: string;
+export class PhotoComponent {
+    @Input() url: string;
+    @Input() author: string;
+    @Output() addToCollection = new EventEmitter<void>();
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  onAddToCollection(): void {
-    console.log('Add to collection: ', this.url);
-  }
+    onAddToCollection(): void {
+        this.addToCollection.emit();
+    }
 }

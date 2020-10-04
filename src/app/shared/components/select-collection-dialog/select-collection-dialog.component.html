@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Add to collection</h2>
+<mat-dialog-content>
+    <div>
+        {{ data.photo.author }}
+    </div>
+    <app-collection
+        *ngFor="let collection of collections"
+        [collection]="collection"
+    ></app-collection>
+</mat-dialog-content>
