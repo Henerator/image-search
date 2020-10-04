@@ -8,12 +8,16 @@ import { AppComponent } from './app.component';
 import { SharedModule } from '@shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { SearchInputComponent } from './home/search-input/search-input.component';
+import { CollectionsComponent } from './collections/collections.component';
+import { CollectionComponent } from './collections/collection/collection.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SearchInputComponent,
+    CollectionsComponent,
+    CollectionComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,30 @@
+:host {
+    display: block;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.4);
+    box-shadow: 0 0 3px rgba(0,0,0,0.4);
+    color: #fff;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+}
+
+.collection__count {
+    margin-bottom: 5px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.collection__name {
+    font-size: 20px;
+    font-weight: bold;
+}
