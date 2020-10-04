@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 
 const COLLECTIONS_DATA_MOCK: Collection[] = [
     {
-        id: '1',
+        id: 1,
         name: 'Surfing',
         description: 'Some collection description',
         photos: [
@@ -18,7 +18,7 @@ const COLLECTIONS_DATA_MOCK: Collection[] = [
         ],
     },
     {
-        id: '2',
+        id: 2,
         name: 'Iceland',
         description: 'Some collection description',
         photos: [],
@@ -33,7 +33,19 @@ export class CollectionsDataService extends BaseDataService<Collection[]> {
         );
     }
 
-    addPhotoToCollection(collectionId: string, photo: Photo): void {
+    addCollection(name: string, description: string): void {
+        const storage = this.getStorage();
+        const lastId = storage.reduce((id, item) => Math.max(id, item.id), 0);
+        storage.push({
+            id: lastId + 1,
+            name,
+            description,
+            photos: [],
+        });
+        this.updateStorage(storage);
+    }
+
+    addPhotoToCollection(collectionId: number, photo: Photo): void {
         const storage = this.getStorage();
         const collection = (storage || []).find(item => item.id === collectionId);
         const isPhotoInCollection = collection.photos.some(item => item.id === photo.id);

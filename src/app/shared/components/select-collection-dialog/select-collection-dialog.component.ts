@@ -1,9 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Collection } from '@shared/models/collection.model';
 import { SubscriptionStorage } from '@shared/models/subscriptions-storage';
 import { CollectionsDataService } from '@shared/services/collections-data.service';
 import { SelectCollectionDialogData } from './select-collection-dialog-data.model';
+import { SelectCollectionDialogResult } from './select-collection-dialog-result.model';
 import { SelectCollection } from './select-collection.model';
 
 @Component({
@@ -18,6 +19,7 @@ export class SelectCollectionDialogComponent implements OnInit, OnDestroy {
 
     constructor(
         private collectionsDataService: CollectionsDataService,
+        private dialogRef: MatDialogRef<SelectCollectionDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: SelectCollectionDialogData,
     ) {
     }
@@ -41,5 +43,9 @@ export class SelectCollectionDialogComponent implements OnInit, OnDestroy {
 
     onCollectionSelect(collection: Collection): void {
         this.collectionsDataService.addPhotoToCollection(collection.id, this.data.photo);
+    }
+
+    onAddNewCollection(): void {
+        this.dialogRef.close(SelectCollectionDialogResult.AddCollection);
     }
 }

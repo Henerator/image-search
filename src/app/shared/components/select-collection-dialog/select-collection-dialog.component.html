@@ -1,10 +1,18 @@
 <h2 mat-dialog-title>Add to collection</h2>
 <mat-dialog-content>
+    <div
+        (click)="onAddNewCollection()"
+        class="collection-item new-collection"
+    >
+        Create a new colleciton
+    </div>
+
     <app-collection
         *ngFor="let collectionWithState of collections"
         [collection]="collectionWithState.collection"
         [isPhotoInCollection]="collectionWithState.hasPhoto"
         [showPhotoState]="true"
         (click)="onCollectionSelect(collectionWithState.collection)"
+        class="collection-item"
     ></app-collection>
 </mat-dialog-content>

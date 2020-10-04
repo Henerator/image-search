@@ -1,0 +1,30 @@
+<form
+    [formGroup]="addCollectionForm"
+    (ngSubmit)="onSubmit()"
+>
+    <div class="control-row">
+        <label for="name">Name</label>
+        <input
+            type="text"
+            formControlName="name"
+            class="control_input control_responsive"
+        />
+    </div>
+
+    <div class="control-row">
+        <label for="description">Description</label>
+        <textarea
+            formControlName="description"
+            class="control_input control_textarea control_responsive"
+        ></textarea>
+    </div>
+
+    <div class="control-row">
+        <button
+            type="submit"
+            class="control_button control_responsive"
+        >
+            Create collection
+        </button>
+    </div>
+</form>
