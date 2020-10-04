@@ -9,6 +9,7 @@ import { SharedModule } from '@shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { SearchInputComponent } from './home/search-input/search-input.component';
 import { CollectionsComponent } from './collections/collections.component';
+import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CollectionsComponent } from './collections/collections.component';
     HomeComponent,
     SearchInputComponent,
     CollectionsComponent,
+    NavigationMenuComponent,
   ],
   imports: [
     BrowserModule,
