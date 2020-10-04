@@ -1,4 +1,11 @@
 <app-collection
     *ngFor="let collection of collections"
     [collection]="collection"
+    [isSelected]="collection === selectedCollection"
+    (click)="onCollectionSelect(collection)"
 ></app-collection>
+
+<app-photos-list
+    *ngIf="selectedCollection"
+    [photos]="selectedCollection.photos"
+></app-photos-list>

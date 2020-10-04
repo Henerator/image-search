@@ -10,6 +10,7 @@ import { CollectionsDataService } from '@shared/services/collections-data.servic
 })
 export class CollectionsComponent implements OnInit, OnDestroy {
     collections: Collection[] = [];
+    selectedCollection: Collection;
 
     private subscriptions = new SubscriptionStorage();
 
@@ -20,7 +21,12 @@ export class CollectionsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscriptions.add(
-            this.collectionsDataService.data$.subscribe(data => this.collections = data)
+            this.collectionsDataService.data$.subscribe(data => {
+                this.collections = data;
+                if (!this.selectedCollection && data.length > 0) {
+                    this.selectedCollection = data[0];
+                }
+            })
         );
 
         this.collectionsDataService.fetch();
@@ -28,5 +34,9 @@ export class CollectionsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
+    }
+
+    onCollectionSelect(collection: Collection): void {
+        this.selectedCollection = collection;
     }
 }

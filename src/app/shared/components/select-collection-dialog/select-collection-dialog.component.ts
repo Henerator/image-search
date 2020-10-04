@@ -4,6 +4,7 @@ import { Collection } from '@shared/models/collection.model';
 import { SubscriptionStorage } from '@shared/models/subscriptions-storage';
 import { CollectionsDataService } from '@shared/services/collections-data.service';
 import { SelectCollectionDialogData } from './select-collection-dialog-data.model';
+import { SelectCollection } from './select-collection.model';
 
 @Component({
     selector: 'app-select-collection-dialog',
@@ -11,7 +12,7 @@ import { SelectCollectionDialogData } from './select-collection-dialog-data.mode
     styleUrls: ['./select-collection-dialog.component.scss']
 })
 export class SelectCollectionDialogComponent implements OnInit, OnDestroy {
-    collections: Collection[] = [];
+    collections: SelectCollection[] = [];
 
     private subscriptions = new SubscriptionStorage();
 
@@ -23,7 +24,12 @@ export class SelectCollectionDialogComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscriptions.add(
-            this.collectionsDataService.data$.subscribe(data => this.collections = data)
+            this.collectionsDataService.data$.subscribe(data => {
+                this.collections = data.map<SelectCollection>(collection => ({
+                    collection,
+                    hasPhoto: collection.photos.some(item => item.id === this.data.photo.id),
+                }));
+            })
         );
 
         this.collectionsDataService.fetch();
@@ -34,6 +40,6 @@ export class SelectCollectionDialogComponent implements OnInit, OnDestroy {
     }
 
     onCollectionSelect(collection: Collection): void {
-        this.collectionsDataService.addPhotoToCollection(collection.id, this.data.photo.id);
+        this.collectionsDataService.addPhotoToCollection(collection.id, this.data.photo);
     }
 }
