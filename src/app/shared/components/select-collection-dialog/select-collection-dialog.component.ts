@@ -32,4 +32,8 @@ export class SelectCollectionDialogComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
     }
+
+    onCollectionSelect(collection: Collection): void {
+        this.collectionsDataService.addPhotoToCollection(collection.id, this.data.photo.id);
+    }
 }

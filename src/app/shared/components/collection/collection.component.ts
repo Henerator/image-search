@@ -8,4 +8,6 @@ import { Collection } from '@shared/models/collection.model';
 })
 export class CollectionComponent {
     @Input() collection: Collection;
+    @Input() showPhotoState: boolean;
+    @Input() isPhotoInCollection: boolean;
 }

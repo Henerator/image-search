@@ -27,6 +27,7 @@ export class UnsplashPhotosDataService extends PhotosDataService<Photo[]> {
                 },
             }).pipe(
                 map(data => data.results.map<Photo>(photo => ({
+                    id: photo.id,
                     url: photo.urls.regular,
                     author: photo.user.name,
                 })))

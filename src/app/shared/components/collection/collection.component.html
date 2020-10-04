@@ -1,6 +1,12 @@
-<div class="collection__count">
-    {{ collection.count }} photos
+<div>
+    <div class="collection__count">
+        {{ collection.photosIds.length }} photos
+    </div>
+    <div class="collection__name">
+        {{ collection.name }}
+    </div>
 </div>
-<div class="collection__name">
-    {{ collection.name }}
+
+<div *ngIf="showPhotoState" class="photo-state">
+    {{ isPhotoInCollection ? 'In collection' : 'Add to collection' }}
 </div>

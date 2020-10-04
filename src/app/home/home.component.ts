@@ -60,6 +60,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     loadPhotos(query?: string): void {
-        this.photosDataService.fetch(3, query);
+        this.photosDataService.fetch(6, query);
     }
 }

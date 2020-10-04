@@ -13,6 +13,7 @@ export abstract class BaseDataService<T> implements OnDestroy {
     private data = new Subject<T>();
     private error = new Subject();
     private isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    private storage: T = null;
 
     constructor() {
         this.data$ = this.data.asObservable();
@@ -31,13 +32,27 @@ export abstract class BaseDataService<T> implements OnDestroy {
 
         this.subscriptionStorage.add(dataStream$
             .subscribe((data: T) => {
-                this.data.next(data);
+                this.updateStorage(data);
                 this.onFetchDone();
             }, (error) => {
                 this.raiseError(error);
                 this.onFetchDone();
             })
         );
+    }
+
+    protected getStorage(): T {
+        if (this.storage) {
+            return (Array.isArray(this.storage)
+                ? this.storage.slice()
+                : Object.assign({}, this.storage)) as T;
+        }
+        return this.storage;
+    }
+
+    protected updateStorage(storage: T): void {
+        this.storage = storage;
+        this.data.next(this.storage);
     }
 
     private startLoading(): void {

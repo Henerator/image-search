@@ -21,6 +21,7 @@ export class PicsumPhotosDataService extends PhotosDataService<Photo[]> {
                 }
             }).pipe(
                 map(picsumPhotos => picsumPhotos.map<Photo>(photo => ({
+                    id: photo.id,
                     url: photo.download_url,
                     author: photo.author,
                 }))

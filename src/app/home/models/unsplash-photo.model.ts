@@ -21,6 +21,7 @@ interface UnsplashPhotoUser {
 
 
 export interface UnsplashPhoto {
+    id: string;
     urls: UnsplashPhotoUrls;
     user: UnsplashPhotoUser;
 }
