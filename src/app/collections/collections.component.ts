@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Collection } from '@shared/models/collection.model';
 import { SubscriptionStorage } from '@shared/models/subscriptions-storage';
-import { CollectionsDataService } from '@shared/services/collections-data.service';
 
 @Component({
     selector: 'app-collections',
@@ -15,21 +15,20 @@ export class CollectionsComponent implements OnInit, OnDestroy {
     private subscriptions = new SubscriptionStorage();
 
     constructor(
-        private collectionsDataService: CollectionsDataService,
+        private store: Store<{ collections: Collection[] }>,
     ) {
     }
 
     ngOnInit(): void {
         this.subscriptions.add(
-            this.collectionsDataService.data$.subscribe(data => {
-                this.collections = data;
-                if (!this.selectedCollection && data.length > 0) {
-                    this.selectedCollection = data[0];
-                }
-            })
+            this.store.select('collections')
+                .subscribe(data => {
+                    this.collections = data;
+                    if (!this.selectedCollection && data.length > 0) {
+                        this.selectedCollection = data[0];
+                    }
+                })
         );
-
-        this.collectionsDataService.fetch();
     }
 
     ngOnDestroy(): void {

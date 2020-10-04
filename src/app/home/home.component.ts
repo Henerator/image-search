@@ -1,14 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
 import { AddCollectionDialogComponent } from '@shared/components/add-collection-dialog/add-collection-dialog.component';
 import { SelectCollectionDialogData } from '@shared/components/select-collection-dialog/select-collection-dialog-data.model';
 import { SelectCollectionDialogResult } from '@shared/components/select-collection-dialog/select-collection-dialog-result.model';
 import { SelectCollectionDialogComponent } from '@shared/components/select-collection-dialog/select-collection-dialog.component';
 import { DEFAULT_DIALOG_CONFIG } from '@shared/constants/dialog-config.const';
 import { AddCollectionFormData } from '@shared/models/add-collection-form-data.model';
+import { Collection } from '@shared/models/collection.model';
 import { Photo } from '@shared/models/photo.model';
 import { SubscriptionStorage } from '@shared/models/subscriptions-storage';
-import { CollectionsDataService } from '@shared/services/collections-data.service';
+import { addCollection } from '../store/actions/collections.actions';
 import { PhotosDataService } from './services/photos-data.service';
 import { PicsumPhotosDataService } from './services/picsum-photos-data.service';
 import { UnsplashPhotosDataService } from './services/unsplash-photos-data.service';
@@ -31,8 +33,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private subscriptions = new SubscriptionStorage();
 
     constructor(
+        private store: Store<{ collections: Collection[] }>,
         private photosDataService: PhotosDataService<Photo[]>,
-        private collectionsDataService: CollectionsDataService,
         private madDialog: MatDialog,
     ) {
     }
@@ -85,7 +87,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.madDialog
             .open(AddCollectionDialogComponent, DEFAULT_DIALOG_CONFIG)
             .afterClosed().subscribe(({ name, description }: AddCollectionFormData) => {
-                this.collectionsDataService.addCollection(name, description);
+                this.store.dispatch(addCollection({
+                    name,
+                    description,
+                }));
                 this.openAddToCollectionDialog();
             });
     }

@@ -1,8 +1,9 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
 import { Collection } from '@shared/models/collection.model';
 import { SubscriptionStorage } from '@shared/models/subscriptions-storage';
-import { CollectionsDataService } from '@shared/services/collections-data.service';
+import { addPhotoToCollection } from 'src/app/store/actions/collections.actions';
 import { SelectCollectionDialogData } from './select-collection-dialog-data.model';
 import { SelectCollectionDialogResult } from './select-collection-dialog-result.model';
 import { SelectCollection } from './select-collection.model';
@@ -18,7 +19,7 @@ export class SelectCollectionDialogComponent implements OnInit, OnDestroy {
     private subscriptions = new SubscriptionStorage();
 
     constructor(
-        private collectionsDataService: CollectionsDataService,
+        private store: Store<{ collections: Collection[] }>,
         private dialogRef: MatDialogRef<SelectCollectionDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: SelectCollectionDialogData,
     ) {
@@ -26,15 +27,14 @@ export class SelectCollectionDialogComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscriptions.add(
-            this.collectionsDataService.data$.subscribe(data => {
-                this.collections = data.map<SelectCollection>(collection => ({
-                    collection,
-                    hasPhoto: collection.photos.some(item => item.id === this.data.photo.id),
-                }));
-            })
+            this.store.select('collections')
+                .subscribe(data => {
+                    this.collections = data.map<SelectCollection>(collection => ({
+                        collection,
+                        hasPhoto: collection.photos.some(item => item.id === this.data.photo.id),
+                    }));
+                })
         );
-
-        this.collectionsDataService.fetch();
     }
 
     ngOnDestroy(): void {
@@ -42,7 +42,10 @@ export class SelectCollectionDialogComponent implements OnInit, OnDestroy {
     }
 
     onCollectionSelect(collection: Collection): void {
-        this.collectionsDataService.addPhotoToCollection(collection.id, this.data.photo);
+        this.store.dispatch(addPhotoToCollection({
+            collectionId: collection.id,
+            photo: this.data.photo,
+        }));
     }
 
     onAddNewCollection(): void {
