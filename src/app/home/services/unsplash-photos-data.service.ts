@@ -18,8 +18,7 @@ export class UnsplashPhotosDataService extends PhotosDataService<Photo[]> {
         super.fetchData(
             this.api.get<UnsplashSearchData>(PHOTOS_PATH, {
                 headers: new HttpHeaders({
-                    // TODO: remove Access Key from public repository
-                    Authorization: 'Client-ID Zg75d6WdJF1_kRV-tSZgSODpo5-0R9o7D7V618Q14_A',
+                    Authorization: 'Client-ID [Access-key]',
                 }),
                 searchParams: {
                     query,
