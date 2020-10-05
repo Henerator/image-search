@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     loadPhotos(query?: string): void {
-        this.photosDataService.fetch(6, query);
+        this.photosDataService.fetch(9, query);
     }
 
     openAddToCollectionDialog(): void {

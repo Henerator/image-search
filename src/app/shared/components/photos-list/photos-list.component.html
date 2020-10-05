@@ -1,8 +1,7 @@
-<div *ngFor="let photo of photos">
-    <app-photo
-        [url]="photo.url"
-        [author]="photo.author"
-        [downloadable]="downloadable"
-        (addToCollection)="onAddToCollection(photo)"
-    ></app-photo>
-</div>
+<app-photo
+    *ngFor="let photo of photos"
+    [url]="photo.url"
+    [author]="photo.author"
+    [downloadable]="downloadable"
+    (addToCollection)="onAddToCollection(photo)"
+></app-photo>
