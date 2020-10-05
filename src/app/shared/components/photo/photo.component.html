@@ -1,12 +1,13 @@
 <img
     [src]="url"
     class="photo__image"
+    loading="lazy"
 />
 
 <div class="photo__overlay">
     <div>
         <span
-            (click)="onAddToCollection()"
+            (click)="onAddToCollection($event)"
             class="photo__action"
         >
             Add to collection

@@ -8,6 +8,7 @@ import { Photo } from '@shared/models/photo.model';
 })
 export class PhotosListComponent {
     @Input() photos: Photo[];
+    @Input() downloadable: boolean;
     @Output() addToCollection = new EventEmitter<Photo>();
 
     onAddToCollection(photo: Photo): void {

@@ -1,4 +1,4 @@
-import { EventEmitter, Output } from '@angular/core';
+import { EventEmitter, HostListener, Output } from '@angular/core';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -9,9 +9,28 @@ import { Component, Input } from '@angular/core';
 export class PhotoComponent {
     @Input() url: string;
     @Input() author: string;
+    @Input() downloadable: boolean;
     @Output() addToCollection = new EventEmitter<void>();
 
-    onAddToCollection(): void {
+    @HostListener('click', ['$event.target'])
+    onClick(): void {
+        if (this.downloadable) {
+            // TODO: find another way
+            fetch(this.url).then((response) => {
+                return response.blob();
+            }).then(blob => {
+                const linkElement = document.createElement('a');
+                linkElement.href = URL.createObjectURL(blob);
+                linkElement.download = '';
+                document.body.appendChild(linkElement);
+                linkElement.click();
+                document.body.removeChild(linkElement);
+            });
+        }
+    }
+
+    onAddToCollection(event: MouseEvent): void {
+        event.stopPropagation();
         this.addToCollection.emit();
     }
 }
